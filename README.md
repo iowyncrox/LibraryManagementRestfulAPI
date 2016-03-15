@@ -20,4 +20,4 @@ To run this project locally, perform the following steps.
 
 * Clone project to your machine using git.
 * Import the project into your IDE using the maven pom.xml.
-* Press play in the package io.spark.librarymanagement.resource
+* Press play in the package io.spark.librarymanagement.resource.MainEntryPoint
