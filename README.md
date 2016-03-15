@@ -68,6 +68,5 @@ Book:
         {
             "author": "world"
         }
-        
     ]
 }
