@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public User updateUserDetails(User user, int id) throws UserException {
-		final User updateUser = new UserDaoImpl().getUserById(id);
+		final User updateUser = this.getUserById(id);
 		final String firstName = user.getFirstName();
 		final String middleName = user.getMiddleName();
 		final String lastName = user.getLastName();
@@ -103,6 +103,6 @@ public class UserDaoImpl implements UserDao {
 			updateUser.setZip(zip);
 		}
 
-		return new UserDaoImpl().getUserById(id);
+		return this.getUserById(id);
 	}
 }

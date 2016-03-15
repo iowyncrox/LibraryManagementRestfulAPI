@@ -41,8 +41,9 @@ public class UserService {
 		final User user = JsonTransformer.fromJson(body, User.class);
 		user.isValid();
 		user.setId(SingletonUserId.getId());
-		new UserDaoImpl().createUser(user);
-		return new UserDaoImpl().getUserById(user.getId());
+		final UserDaoImpl userDaoImpl = new UserDaoImpl();
+		userDaoImpl.createUser(user);
+		return userDaoImpl.getUserById(user.getId());
 	}
 
 	/**

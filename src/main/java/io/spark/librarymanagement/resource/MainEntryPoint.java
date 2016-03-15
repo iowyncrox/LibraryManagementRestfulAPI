@@ -31,12 +31,16 @@ public class MainEntryPoint {
 		Spark.post("/users", "application/json", (request, response) -> {
 			final String body = request.body();
 			try {
-				final User user = new UserService().setUserDetails(body);
 				response.status(201);
-				return user;
+				response.type("application/json");
+				return new UserService().setUserDetails(body);
 			} catch (final UserException e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage(e.getMessage());
 			} catch (final Exception e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("Enter correct format JSON");
 			}
 		}, new JsonTransformer());
@@ -45,13 +49,15 @@ public class MainEntryPoint {
 		 * Get user by ID
 		 */
 		Spark.get("/users/:id", "application/json", (request, response) -> {
-			response.status(200);
-			response.type("application/json");
 			final String id = request.params(":id");
 			final User user = new UserDaoImpl().getUserById(Integer.parseInt(id));
 			if (user == null) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("ID does not exist");
 			} else {
+				response.status(200);
+				response.type("application/json");
 				return user;
 			}
 		}, new JsonTransformer());
@@ -63,21 +69,29 @@ public class MainEntryPoint {
 			final String id = request.params(":id");
 			final User user = new UserService().getUserDetailsById(Integer.parseInt(id));
 			if (user == null) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("No user present with the id: " + id);
 			} else {
 				try {
-					final User resultUser = new UserService().updateUserDetails(request.body(), Integer.parseInt(id));
 					response.status(200);
 					response.type("application/json");
-					return resultUser;
+					return new UserService().updateUserDetails(request.body(), Integer.parseInt(id));
 				} catch (final UserException e) {
+					response.status(400);
+					response.type("application/json");
 					return new ErrorJsonMessage(e.getMessage());
 				} catch (final Exception e) {
+					response.status(400);
+					response.type("application/json");
 					return new ErrorJsonMessage("Enter correct format JSON");
 				}
 			}
 		}, new JsonTransformer());
 
+		/**
+		 * return all response by compressing via gzip
+		 */
 		Spark.after((request, response) -> {
 			response.header("Content-Encoding", "gzip");
 		});
@@ -97,11 +111,16 @@ public class MainEntryPoint {
 		Spark.post("/books", "application/json", (request, response) -> {
 			try {
 				final Book book = new BookService().setBookDetails(request.body());
+				response.status(201);
 				response.type("application/json");
 				return book;
 			} catch (final BookException e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage(e.getMessage());
 			} catch (final Exception e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("Enter correct format JSON");
 			}
 		}, new JsonTransformer());
@@ -112,10 +131,13 @@ public class MainEntryPoint {
 		Spark.get("/books/:name", "application/json", (request, response) -> {
 			final String name = request.params(":name");
 			final List<Book> list = new BookService().getBookByName(name.toLowerCase());
-			response.type("application/json");
 			if (list.isEmpty()) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("No Books with the name: " + name);
 			} else {
+				response.status(200);
+				response.type("application/json");
 				return list;
 			}
 		}, new JsonTransformer());
@@ -127,11 +149,16 @@ public class MainEntryPoint {
 			try {
 				final String userId = request.params(":userId");
 				final String bookId = request.params(":bookId");
+				response.status(200);
 				response.type("application/json");
 				return new BookService().checkOutBook(Integer.parseInt(userId), Integer.parseInt(bookId));
 			} catch (UserException | BookException e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage(e.getMessage());
 			} catch (final Exception e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("Enter correct format JSON");
 			}
 
@@ -144,14 +171,18 @@ public class MainEntryPoint {
 			try {
 				final String userId = request.params(":userId");
 				final String bookId = request.params(":bookId");
+				response.status(200);
 				response.type("application/json");
 				return new BookService().getCheckedOutBook(Integer.parseInt(userId), Integer.parseInt(bookId));
 			} catch (UserException | BookException e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage(e.getMessage());
 			} catch (final Exception e) {
+				response.status(400);
+				response.type("application/json");
 				return new ErrorJsonMessage("Enter correct format JSON");
 			}
-
 		}, new JsonTransformer());
 	}
 }

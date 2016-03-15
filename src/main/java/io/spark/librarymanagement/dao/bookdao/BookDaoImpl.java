@@ -47,8 +47,7 @@ public class BookDaoImpl implements BookDao {
 	public Book checkOutBook(int userId, int bookId) throws UserException, BookException {
 		final UserDaoImpl userDaoImpl = new UserDaoImpl();
 		final User user = userDaoImpl.getUserById(userId);
-		final BookDaoImpl bookDaoImpl = new BookDaoImpl();
-		final Book book = bookDaoImpl.getBookById(bookId);
+		final Book book = this.getBookById(bookId);
 		if (user == null) {
 			throw new UserException("User cannot be found");
 		}
@@ -107,8 +106,7 @@ public class BookDaoImpl implements BookDao {
 	public Book getCheckedOutBook(int userId, int bookId) throws UserException, BookException {
 		final UserDaoImpl userDaoImpl = new UserDaoImpl();
 		final User user = userDaoImpl.getUserById(userId);
-		final BookDaoImpl bookDaoImpl = new BookDaoImpl();
-		final Book book = bookDaoImpl.getBookById(bookId);
+		final Book book = this.getBookById(bookId);
 		if (user == null) {
 			throw new UserException("User cannot be found");
 		}
