@@ -28,27 +28,27 @@ Assumptions
 
 User has the following properties:
 
-id
-firstName (alphabets)
-middleName (alphabets, optional)
-lastName (alphabets)
-age (valid non zero positive number)
-gender (M or F)
-phone (10-digit positive number)
-zip (optional)
+* id
+* firstName (alphabets)
+* middleName (alphabets, optional)
+* lastName (alphabets)
+* age (valid non zero positive number)
+* gender (M or F)
+* phone (10-digit positive number)
+* zip (optional)
 
 Book has the following properties:
 
-id
-name
-authors (can have multiple authors)
-checkedOutBy (user that has this book checked out)
+* id
+* name
+* authors (can have multiple authors)
+* checkedOutBy (user that has this book checked out)
 
 
 Sample JSON
 ---------------
 
-User:
+* User:
 {
     "firstName": "apple",
     "lastName": "orange",
@@ -58,7 +58,7 @@ User:
 }
 
 
-Book:
+* Book:
 {
     "name": "Java",
     "author": [
