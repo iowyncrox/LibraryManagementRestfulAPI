@@ -59,14 +59,14 @@ Sample JSON
 
 
 * Book:
-{
-    "name": "Java",
-    "author": [
-        {
-            "author": "hello"
+{ 
+    "name": "Java", 
+    "authors": [ 
+        { 
+            "name": "hello"
         },
         {
-            "author": "world"
+            "name": "world"
         }
     ]
 }
